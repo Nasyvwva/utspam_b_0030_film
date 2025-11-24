@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:utspam_b_0030_film/models/user.dart';
-import 'package:utspam_b_0030_film/services/storage_service.dart';
+import 'package:utspam_b_0030_film/services/database_helper.dart.dart';
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -40,7 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30),
-            
+
             TextFormField(
               controller: _namaCtrl,
               decoration: const InputDecoration(
@@ -56,7 +56,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               },
             ),
             const SizedBox(height: 16),
-            
+
             TextFormField(
               controller: _emailCtrl,
               keyboardType: TextInputType.emailAddress,
@@ -77,7 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               },
             ),
             const SizedBox(height: 16),
-            
+
             TextFormField(
               controller: _alamatCtrl,
               maxLines: 2,
@@ -94,7 +94,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               },
             ),
             const SizedBox(height: 16),
-            
+
             TextFormField(
               controller: _telpCtrl,
               keyboardType: TextInputType.phone,
@@ -114,7 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               },
             ),
             const SizedBox(height: 16),
-            
+
             TextFormField(
               controller: _usernameCtrl,
               decoration: const InputDecoration(
@@ -130,7 +130,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               },
             ),
             const SizedBox(height: 16),
-            
+
             TextFormField(
               controller: _passwordCtrl,
               obscureText: _isObscure,
@@ -139,7 +139,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 border: const OutlineInputBorder(),
                 prefixIcon: const Icon(Icons.lock),
                 suffixIcon: IconButton(
-                  icon: Icon(_isObscure ? Icons.visibility_off : Icons.visibility),
+                  icon: Icon(
+                      _isObscure ? Icons.visibility_off : Icons.visibility),
                   onPressed: () {
                     setState(() {
                       _isObscure = !_isObscure;
@@ -158,29 +159,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
               },
             ),
             const SizedBox(height: 24),
-            
+
             ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  List<User> users = await StorageService.getUsers();
-                  
-                  bool emailExists = users.any((u) => u.email == _emailCtrl.text);
-                  bool usernameExists = users.any((u) => u.username == _usernameCtrl.text);
-                  
+                  final db = DatabaseHelper.instance;
+
+                  bool emailExists = await db.isEmailExists(_emailCtrl.text);
+                  bool usernameExists = await db.isUsernameExists(_usernameCtrl.text);
+
                   if (emailExists) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Email sudah terdaftar')),
                     );
                     return;
                   }
-                  
+
                   if (usernameExists) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Username sudah digunakan')),
                     );
                     return;
                   }
-                  
+
                   User newUser = User(
                     nama: _namaCtrl.text,
                     email: _emailCtrl.text,
@@ -189,17 +190,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     username: _usernameCtrl.text,
                     password: _passwordCtrl.text,
                   );
-                  
-                  users.add(newUser);
-                  await StorageService.saveUsers(users);
-                  
+
+                  await db.createUser(newUser);
+
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Registrasi berhasil!')),
                   );
-                  
+
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const LoginScreen()),
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ),
                   );
                 }
               },
@@ -210,8 +212,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               child: const Text('DAFTAR', style: TextStyle(fontSize: 16)),
             ),
+
             const SizedBox(height: 16),
-            
+
             TextButton(
               onPressed: () {
                 Navigator.pop(context);

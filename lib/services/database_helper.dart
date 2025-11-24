@@ -175,6 +175,43 @@ class DatabaseHelper {
     );
   }
 
+  Future<void> updateAllPosterPaths() async {
+    final db = await database;
+
+    await db.update(
+      'transactions',
+      {'posterFilm': 'death_poetry_society.png'},
+      where: 'posterFilm LIKE ?',
+      whereArgs: ['%death poetry society%'],
+    );
+  
+    await db.update(
+      'transactions',
+      {'posterFilm': 'sampai_titik_terakhirmu.png'},
+      where: 'posterFilm LIKE ?',
+      whereArgs: ['%Sampai Titik Terakhirmu%'],
+    );
+ 
+    await db.update(
+      'transactions',
+      {'posterFilm': 'grave_of_the_fireflies.png'},
+      where: 'posterFilm LIKE ?',
+      whereArgs: ['%grave of the fireflies%'],
+    );
+
+    await db.update(
+      'transactions',
+      {'posterFilm': 'your_letter.png'},
+      where: 'posterFilm LIKE ?',
+      whereArgs: ['%your letter%'],
+    );
+  }
+
+  Future<void> deleteAllTransactions() async {
+    final db = await database;
+    await db.delete('transactions');
+  }
+
   Future<void> close() async {
     final db = await database;
     db.close();

@@ -79,36 +79,42 @@ class _PurchaseFormScreenState extends State<PurchaseFormScreen> {
         child: ListView(
           padding: const EdgeInsets.all(16.0),
           children: [
-            Card(
-              elevation: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    Text(widget.film.poster, style: const TextStyle(fontSize: 60)),
-                    const SizedBox(height: 16),
-                    Text(
-                      widget.film.judul,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      Card(
+            elevation: 4,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Image.asset(
+                    'lib/assets/${widget.film.poster}',
+                    height: 180,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    widget.film.judul,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                    const SizedBox(height: 8),
-                    Text('Genre: ${widget.film.genre}'),
-                    Text('Jadwal: ${widget.jadwal}'),
-                    Text(
-                      'Harga: ${currencyFormat.format(widget.film.harga)}',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green,
-                      ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text('Genre: ${widget.film.genre}'),
+                  Text('Jadwal: ${widget.jadwal}'),
+                  Text(
+                    'Harga: ${currencyFormat.format(widget.film.harga)}',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
+          ),
+
             const SizedBox(height: 20),
 
             TextFormField(

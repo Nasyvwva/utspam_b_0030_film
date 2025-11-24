@@ -59,9 +59,11 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    Text(
-                      widget.transaction.posterFilm,
-                      style: const TextStyle(fontSize: 50),
+                    Image.asset(
+                      'lib/assets/${widget.transaction.posterFilm}',
+                      height: 180,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
                     ),
                     const SizedBox(height: 8),
                     Text(

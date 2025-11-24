@@ -78,18 +78,21 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
                         elevation: 4,
                         child: ListTile(
                           contentPadding: const EdgeInsets.all(16),
-                          leading: Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.deepPurple.shade100,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Center(
-                              child: Text(
-                                transaction.posterFilm,
-                                style: const TextStyle(fontSize: 30),
-                              ),
+                          leading: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.asset(
+                              'lib/assets/${transaction.posterFilm}',
+                              width: 60,
+                              height: 60,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  width: 60,
+                                  height: 60,
+                                  color: Colors.grey.shade300,
+                                  child: const Icon(Icons.broken_image, color: Colors.grey),
+                                );
+                              },
                             ),
                           ),
                           title: Text(

@@ -42,10 +42,16 @@ class FilmListScreen extends StatelessWidget {
                           color: Colors.deepPurple.shade100,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: Center(
-                          child: Text(
-                            film.poster,
-                            style: const TextStyle(fontSize: 40),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.asset(
+                            'lib/assets/${film.poster}',
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Center(
+                                child: Icon(Icons.movie, size: 40, color: Colors.deepPurple),
+                              );
+                            },
                           ),
                         ),
                       ),

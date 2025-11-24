@@ -48,9 +48,34 @@ class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: Text(
-                _transaction.posterFilm,
-                style: const TextStyle(fontSize: 80),
+              child: Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.asset(
+                    'lib/assets/${_transaction.posterFilm}',
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        color: Colors.deepPurple.shade100,
+                        child: const Center(
+                          child: Icon(Icons.movie, size: 80, color: Colors.deepPurple),
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 20),

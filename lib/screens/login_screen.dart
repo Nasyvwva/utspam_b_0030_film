@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 20),
 
                 const Text(
-                  'YOUR CINEMA JOURNEY STARTS HERE',
+                  'YOUR CINEMA JOURNEY',
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:utspam_b_0030_film/models/user.dart';
-import 'package:utspam_b_0030_film/services/storage_service.dart';
+import 'package:utspam_b_0030_film/services/database_helper.dart';
 import 'login_screen.dart';
 import 'package:utspam_b_0030_film/screens/film_list_screen.dart';
+import 'package:utspam_b_0030_film/screens/transaction_history_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final User user;
@@ -147,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             TextButton(
               onPressed: () async {
-                await StorageService.removeCurrentUser();
+                await DatabaseHelper.instance.removeCurrentUser();
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const LoginScreen()),

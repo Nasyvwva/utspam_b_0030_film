@@ -17,7 +17,7 @@ class Film {
     Film(
       judul: 'Death Poetry Society',
       genre: 'Drama',
-      harga: 50000, // kamu bisa ganti kalau ada harga khusus
+      harga: 50000, 
       poster: 'lib/assets/death poetry society.png',
       jadwal: ['12:05', '14:00', '16:35', '18:50', '21:05'],
     ),

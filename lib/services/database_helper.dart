@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:utspam_b_0030_film/models/user.dart';
-import 'package:utspam_b_0030_film/models/transaction.dart';
+import 'package:utspam_b_0030_film/models/transaction.dart' as MyModel;
 
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._init();
@@ -27,7 +27,6 @@ class DatabaseHelper {
   }
 
   Future _createDB(Database db, int version) async {
-
     await db.execute('''
       CREATE TABLE users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -64,7 +63,6 @@ class DatabaseHelper {
       )
     ''');
   }
-
 
   Future<int> createUser(User user) async {
     final db = await database;
@@ -141,12 +139,12 @@ class DatabaseHelper {
     await db.delete('current_user');
   }
 
-  Future<void> createTransaction(Transaction transaction) async {
+  Future<void> createTransaction(MyModel.Transaction transaction) async {
     final db = await database;
     await db.insert('transactions', transaction.toMap());
   }
 
-  Future<List<Transaction>> getTransactionsByUser(String namaPembeli) async {
+  Future<List<MyModel.Transaction>> getTransactionsByUser(String namaPembeli) async {
     final db = await database;
     final maps = await db.query(
       'transactions',
@@ -155,10 +153,10 @@ class DatabaseHelper {
       orderBy: 'id DESC',
     );
 
-    return maps.map((map) => Transaction.fromMap(map)).toList();
+    return maps.map((map) => MyModel.Transaction.fromMap(map)).toList();
   }
 
-  Future<void> updateTransaction(Transaction transaction) async {
+  Future<void> updateTransaction(MyModel.Transaction transaction) async {
     final db = await database;
     await db.update(
       'transactions',

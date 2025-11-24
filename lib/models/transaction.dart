@@ -25,7 +25,7 @@ class Transaction {
     this.status = 'selesai',
   });
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'id': id,
       'judulFilm': judulFilm,
@@ -41,19 +41,19 @@ class Transaction {
     };
   }
 
-  factory Transaction.fromJson(Map<String, dynamic> json) {
+  factory Transaction.fromMap(Map<String, dynamic> map) {
     return Transaction(
-      id: json['id'],
-      judulFilm: json['judulFilm'],
-      posterFilm: json['posterFilm'],
-      jadwalFilm: json['jadwalFilm'],
-      namaPembeli: json['namaPembeli'],
-      jumlahTiket: json['jumlahTiket'],
-      tanggalBeli: json['tanggalBeli'],
-      totalBiaya: json['totalBiaya'],
-      metodePembayaran: json['metodePembayaran'],
-      nomorKartu: json['nomorKartu'],
-      status: json['status'] ?? 'selesai',
+      id: map['id'] as String,
+      judulFilm: map['judulFilm'] as String,
+      posterFilm: map['posterFilm'] as String,
+      jadwalFilm: map['jadwalFilm'] as String,
+      namaPembeli: map['namaPembeli'] as String,
+      jumlahTiket: map['jumlahTiket'] as int,
+      tanggalBeli: map['tanggalBeli'] as String,
+      totalBiaya: map['totalBiaya'] as int,
+      metodePembayaran: map['metodePembayaran'] as String,
+      nomorKartu: map['nomorKartu'] as String?,
+      status: map['status'] as String,
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:utspam_b_0030_film/models/user.dart';
-import 'package:utspam_b_0030_film/services/database_helper.dart.dart';
+import 'package:utspam_b_0030_film/services/database_helper.dart';
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {

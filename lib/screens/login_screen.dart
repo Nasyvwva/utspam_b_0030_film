@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:utspam_b_0030_film/services/storage_service.dart';
+import 'package:utspam_b_0030_film/services/database_helper.dart';
 import 'package:utspam_b_0030_film/models/user.dart';
 import 'package:utspam_b_0030_film/screens/register_screen.dart';
 import 'package:utspam_b_0030_film/screens/home_screen.dart';
@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'lib/assets/logo.png', 
+                  'lib/assets/logo.png',
                   width: 150,
                   height: 150,
                   fit: BoxFit.contain,
@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 40),
-                
+
                 TextFormField(
                   controller: _loginCtrl,
                   decoration: const InputDecoration(
@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
-                
+
                 TextFormField(
                   controller: _passwordCtrl,
                   obscureText: _isObscure,
@@ -69,7 +69,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     border: const OutlineInputBorder(),
                     prefixIcon: const Icon(Icons.lock),
                     suffixIcon: IconButton(
-                      icon: Icon(_isObscure ? Icons.visibility_off : Icons.visibility),
+                      icon: Icon(_isObscure
+                          ? Icons.visibility_off
+                          : Icons.visibility),
                       onPressed: () {
                         setState(() {
                           _isObscure = !_isObscure;
@@ -84,25 +86,24 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
+
                 const SizedBox(height: 24),
-                
+
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        List<User> users = await StorageService.getUsers();
-                        
-                        User? foundUser = users.cast<User?>().firstWhere(
-                          (user) =>
-                              (user!.email == _loginCtrl.text || user.username == _loginCtrl.text) &&
-                              user.password == _passwordCtrl.text,
-                          orElse: () => null,
+                        final db = DatabaseHelper.instance;
+
+                        User? foundUser = await db.getUser(
+                          _loginCtrl.text,
+                          _passwordCtrl.text,
                         );
-                        
+
                         if (foundUser != null) {
-                          await StorageService.saveCurrentUser(foundUser);
-                          
+                          await db.saveCurrentUser(foundUser.id!);
+
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -112,7 +113,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text('Email/Username atau Password salah'),
+                              content: Text(
+                                  'Email/Username atau Password salah'),
                             ),
                           );
                         }
@@ -123,16 +125,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                     ),
-                    child: const Text('LOGIN', style: TextStyle(fontSize: 16)),
+                    child:
+                        const Text('LOGIN', style: TextStyle(fontSize: 16)),
                   ),
                 ),
+
                 const SizedBox(height: 16),
-                
+
                 TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => const RegisterScreen(),
+                      ),
                     );
                   },
                   child: const Text('Belum punya akun? Daftar'),

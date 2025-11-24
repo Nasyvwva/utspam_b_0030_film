@@ -1,4 +1,5 @@
 class User {
+  final int? id;
   final String nama;
   final String email;
   final String alamat;
@@ -7,6 +8,7 @@ class User {
   final String password;
 
   User({
+    this.id,
     required this.nama,
     required this.email,
     required this.alamat,
@@ -15,8 +17,9 @@ class User {
     required this.password,
   });
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'nama': nama,
       'email': email,
       'alamat': alamat,
@@ -26,14 +29,15 @@ class User {
     };
   }
 
-  factory User.fromJson(Map<String, dynamic> json) {
+  factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      nama: json['nama'],
-      email: json['email'],
-      alamat: json['alamat'],
-      noTelepon: json['noTelepon'],
-      username: json['username'],
-      password: json['password'],
+      id: map['id'] as int?,
+      nama: map['nama'] as String,
+      email: map['email'] as String,
+      alamat: map['alamat'] as String,
+      noTelepon: map['noTelepon'] as String,
+      username: map['username'] as String,
+      password: map['password'] as String,
     );
   }
 }
